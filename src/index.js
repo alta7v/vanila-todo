@@ -1,15 +1,11 @@
 import "./styles.css";
 
-const addTodo = (text) => {
-  // li
+const addIncompleteList = (text) => {
+  // Element 作成
   const li = document.createElement("li");
-
-  // div
   const div = document.createElement("div");
   div.className = "list-row";
   li.appendChild(div);
-
-  // div2
   const div2 = document.createElement("div");
   div2.className = "todo-status";
   div2.innerText = text;
@@ -19,6 +15,7 @@ const addTodo = (text) => {
   const completeButton = document.createElement("button");
   completeButton.innerText = "完了";
   completeButton.addEventListener("click", () => {
+    // 完了へ タスクを 移動する
     // Text を 取得する
     const completeText = completeButton.parentNode.firstElementChild.innerText;
 
@@ -37,12 +34,12 @@ const addTodo = (text) => {
     completeRetButton.addEventListener("click", () => {
       const text = completeButton.parentNode.firstElementChild.innerText;
 
-      addTodo(text);
+      addIncompleteList(text);
       deleteCompleteList(completeRetButton);
     });
 
     // 完了リストに追加する
-    addFromCompleteList(completeLi);
+    document.getElementById("complete-list").appendChild(completeLi);
     // ボタンの親 li タグを消す
     deleteIncompleteList(completeButton);
   });
@@ -67,23 +64,18 @@ const deleteIncompleteList = (targetElement) => {
   document.getElementById("incomplete-list").removeChild(parrentli);
 };
 
-// 未完 リストから削除する
+// 完了 リストから削除する
 const deleteCompleteList = (targetElement) => {
   const parrentdiv = targetElement.parentNode;
   const parrentli = parrentdiv.parentNode;
   document.getElementById("complete-list").removeChild(parrentli);
 };
 
-const addFromCompleteList = (targetElement) => {
-  document.getElementById("complete-list").appendChild(targetElement);
-};
-
 const onClickAdd = () => {
   // テキストボックスの値を取得し、初期化する
   const inputText = document.getElementById("add-text").value;
   document.getElementById("add-text").value = "";
-  //alert(inputText);
-  addTodo(inputText);
+  addIncompleteList(inputText);
 };
 
 document.getElementById("add-button").addEventListener("click", onClickAdd);
