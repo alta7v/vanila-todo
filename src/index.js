@@ -32,7 +32,10 @@ const onClickAdd = () => {
   const deleteButton = document.createElement("button");
   deleteButton.innerText = "削除";
   deleteButton.addEventListener("click", () => {
-    alert("削除");
+    // ボタンの親 li タグを消す
+    const parrentdiv = deleteButton.parentNode;
+    const parrentli = parrentdiv.parentNode;
+    document.getElementById("incomplete-list").removeChild(parrentli);
   });
   div.appendChild(deleteButton);
 
