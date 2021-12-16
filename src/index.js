@@ -20,26 +20,54 @@ const onClickAdd = () => {
   div2.innerText = inputText;
   div.appendChild(div2);
 
-  // button
+  // complete button
   const completeButton = document.createElement("button");
   completeButton.innerText = "完了";
   completeButton.addEventListener("click", () => {
-    alert("完了");
+    // Text を 取得する
+    const text = completeButton.parentNode.firstChild.innerText;
+
+    // Element 作成
+    const completeLi = document.createElement("li");
+    const completeDiv = document.createElement("div");
+    completeDiv.className = "list-row";
+    completeLi.appendChild(completeDiv);
+    const completeDiv2 = document.createElement("div");
+    completeDiv2.className = "todo-status";
+    completeDiv2.innerText = text;
+    completeDiv.appendChild(completeDiv2);
+    const completeRetButton = document.createElement("button");
+    completeRetButton.innerText = "戻る";
+    completeDiv.appendChild(completeRetButton);
+
+    // 完了リストに追加する
+    addFromCompleteList(completeLi);
+    // ボタンの親 li タグを消す
+    deleteFromIncompleteList(completeButton);
   });
   div.appendChild(completeButton);
 
-  // button
+  // delete button
   const deleteButton = document.createElement("button");
   deleteButton.innerText = "削除";
   deleteButton.addEventListener("click", () => {
     // ボタンの親 li タグを消す
-    const parrentdiv = deleteButton.parentNode;
-    const parrentli = parrentdiv.parentNode;
-    document.getElementById("incomplete-list").removeChild(parrentli);
+    deleteFromIncompleteList(deleteButton);
   });
   div.appendChild(deleteButton);
 
   document.getElementById("incomplete-list").appendChild(li);
+};
+
+// 未完 リストから削除する
+const deleteFromIncompleteList = (targetElement) => {
+  const parrentdiv = targetElement.parentNode;
+  const parrentli = parrentdiv.parentNode;
+  document.getElementById("incomplete-list").removeChild(parrentli);
+};
+
+const addFromCompleteList = (targetElement) => {
+  document.getElementById("complete-list").appendChild(targetElement);
 };
 
 document.getElementById("add-button").addEventListener("click", onClickAdd);
